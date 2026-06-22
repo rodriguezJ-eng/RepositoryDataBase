@@ -8,6 +8,7 @@
 -- ============================================================
 -- CREACIÓN DE LA BASE DE DATOS
 CREATE DATABASE BibliotecaUniversitaria;
+GO
 USE BibliotecaUniversitaria;
 
 -- 
@@ -20,6 +21,7 @@ IDCategoria INT IDENTITY(1,1) PRIMARY KEY,
 Nombre VARCHAR(100) NOT NULL UNIQUE,
 Descripcion VARCHAR(255) NOT NULL DEFAULT 'Sin descripción'
 );
+Go
 
 -- Tabla: Autor
 CREATE TABLE Autor(
@@ -29,6 +31,7 @@ Apellido VARCHAR(100) NOT NULL,
 Nacionalidad VARCHAR(80) NOT NULL DEFAULT 'Desconocida',
 CONSTRAINT UQ_Autor UNIQUE (Nombre, Apellido)
 );
+go
 
 -- Tabla: Libro
 CREATE TABLE Libro(
@@ -51,6 +54,7 @@ Codigo VARCHAR(30)  NOT NULL UNIQUE,
 Estado VARCHAR(20)  NOT NULL DEFAULT 'Disponible'CHECK (Estado IN ('Disponible','Prestado','En reparación','Baja')),
 CONSTRAINT FK_Ejemplar_Libro FOREIGN KEY (IDLibro) REFERENCES Libro(IDLibro)
 );
+go
 
 -- Tabla: Carrera (para clasificar usuarios estudiantes)
 CREATE TABLE Carrera (
@@ -58,6 +62,7 @@ IDCarrera INT IDENTITY(1,1) PRIMARY KEY,
 Nombre VARCHAR(150) NOT NULL UNIQUE,
 Facultad VARCHAR(150) NOT NULL
 );
+go
 
 -- Tabla: Usuario (lectores de la biblioteca)
 CREATE TABLE Usuario (
@@ -71,6 +76,7 @@ Tipo VARCHAR(20)  NOT NULL DEFAULT 'Estudiante' CHECK (Tipo IN ('Estudiante','Do
 IDCarrera INT NULL,
 CONSTRAINT FK_Usuario_Carrera FOREIGN KEY (IDCarrera) REFERENCES Carrera(IDCarrera)
 );
+go
 
 -- Tabla: TarjetaBiblioteca (relación 1:1 con Usuario)
 -- Cada usuario tiene exactamente una tarjeta de membresía
@@ -84,7 +90,7 @@ Activa BIT NOT NULL DEFAULT 1,
 CONSTRAINT FK_Tarjeta_Usuario FOREIGN KEY (IDUsuario) REFERENCES Usuario(IDUsuario),
 CONSTRAINT CK_Tarjeta_Vigencia CHECK (FechaVence > FechaEmision)
 );
-
+go
 
 -- Tabla: Prestamo (relación 1:N con Usuario y Ejemplar)
 CREATE TABLE Prestamo (
@@ -99,6 +105,7 @@ CONSTRAINT FK_Prestamo_Usuario  FOREIGN KEY (IDUsuario) REFERENCES Usuario(IDUsu
 CONSTRAINT FK_Prestamo_Ejemplar FOREIGN KEY (IDEjemplar) REFERENCES Ejemplar(IDEjemplar),
 CONSTRAINT CK_Prestamo_Fechas   CHECK (FechaDevolucion > FechaPrestamo)
 );
+go
 
 
 -- Tabla: Multa (relación 1:N con Prestamo)
@@ -110,6 +117,7 @@ Pagada BIT NOT NULL DEFAULT 0,
 FechaMulta DATE NOT NULL DEFAULT CAST(GETDATE() AS DATE),
 CONSTRAINT FK_Multa_Prestamo FOREIGN KEY (IDPrestamo) REFERENCES Prestamo(IDPrestamo)
 );
+go
 
 -- Tabla: LibroAutor (relación M:M entre Libro y Autor)
 CREATE TABLE LibroAutor(
@@ -119,15 +127,16 @@ CONSTRAINT PK_LibroAutor PRIMARY KEY (IDLibro, IDAutor),
 CONSTRAINT FK_LA_Libro  FOREIGN KEY (IDLibro)  REFERENCES Libro(IDLibro),
 CONSTRAINT FK_LA_Autor  FOREIGN KEY (IDAutor)  REFERENCES Autor(IDAutor)
 );
+go
 
 -- USUARIOS SQL
 CREATE USER RashelS    WITHOUT LOGIN;
 CREATE USER JonathanR  WITHOUT LOGIN;
 CREATE USER EngelA WITHOUT LOGIN;
-CREATE USER EstudianteB WITHOUT LOGIN;
+--CREATE USER EstudianteB WITHOUT LOGIN;
 
 
 ALTER ROLE db_owner ADD MEMBER RashelS;
 ALTER ROLE db_owner ADD MEMBER JonathanR;
 ALTER ROLE db_owner ADD MEMBER EngelA;
-ALTER ROLE db_owner ADD MEMBER EstudianteB;
+--ALTER ROLE db_owner ADD MEMBER EstudianteB;
