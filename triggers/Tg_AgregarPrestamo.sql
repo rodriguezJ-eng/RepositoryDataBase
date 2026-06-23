@@ -8,6 +8,27 @@ BEGIN
 END;
 GO
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 -- usamos un usuario para hacer el registro
 SELECT USER_NAME() AS UsuarioActual;
 EXECUTE AS USER = 'RashelS';

@@ -7,6 +7,21 @@ BEGIN
     SELECT 'DELETE', GETDATE(), IDLibro, USER_NAME() FROM deleted;
 END;
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 -- usamos un usuario para hacer el registro
 SELECT USER_NAME() AS UsuarioActual;
 EXECUTE AS USER = 'RashelS';

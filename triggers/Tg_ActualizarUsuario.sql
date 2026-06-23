@@ -9,6 +9,24 @@ BEGIN
     SELECT 'UPDATE', GETDATE(), IDUsuario, USER_NAME() FROM inserted;
 END;
 GO
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 -- Verificamos el usuario actual administrador antes REGISTRAR
 SELECT USER_NAME() AS UsuarioActual;
 EXECUTE AS USER = 'RashelS';

@@ -11,6 +11,26 @@ BEGIN
 END;
 GO
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 -- Verificamos el usuario actual administrador antes REGISTRAR
 SELECT USER_NAME() AS UsuarioActual;
 EXECUTE AS USER = 'RashelS';

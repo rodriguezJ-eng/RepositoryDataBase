@@ -10,6 +10,11 @@ BEGIN
     SELECT 'DELETE', GETDATE(), IDPrestamo, USER_NAME() FROM deleted;
 END;
 GO
+
+
+
+
+
 -- elegimos el usuario para hacer el registro
 SELECT USER_NAME() AS UsuarioActual;
 EXECUTE AS USER = 'RashelS';

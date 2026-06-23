@@ -8,6 +8,22 @@ BEGIN
 END;
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 --usar un usuario para registrar
 SELECT USER_NAME() AS UsuarioActual;
 EXECUTE AS USER = 'RashelS';

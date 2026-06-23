@@ -1,11 +1,11 @@
--- ============================================================
+
 -- SISTEMA DE GESTIÓN DE BIBLIOTECA UNIVERSITARIA
 -- Script: Creación de Base de Datos y Estructura (DDL)
 -- Integrantes:
 --   Rashel Sanchez Gonzalez
 --   Jonathan Rodríguez López
 --   Engel Josué Aburto
--- ============================================================
+
 -- CREACIÓN DE LA BASE DE DATOS
 CREATE DATABASE BibliotecaUniversitaria;
 GO

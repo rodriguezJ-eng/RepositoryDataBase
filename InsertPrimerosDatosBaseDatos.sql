@@ -79,8 +79,18 @@ INSERT INTO LibroAutor (IDLibro, IDAutor) VALUES (9, 10), (9, 11);
 -- Redes -> Tanenbaum
 INSERT INTO LibroAutor (IDLibro, IDAutor) VALUES (10, 6);
 
+SELECT * FROM AuditoriaLibro;
+
+
+
+
+
+
 
 -- EJEMPLARES (2 por libro aprox.)
+EXECUTE AS USER = 'JonathanR';
+SELECT USER_NAME() AS UsuarioActual; -- Verifica que el usuario está activo
+REVERT; -- Regresa al usuario original 
 
 INSERT INTO Ejemplar (IDLibro, Codigo, Estado) VALUES
 (1,  'EJ-001', 'Disponible'),
@@ -104,7 +114,9 @@ INSERT INTO Carrera (Nombre, Facultad) VALUES
 ('Medicina','Facultad de Ciencias de la Salud'),
 ('Derecho','Facultad de Ciencias Jurídicas');
 
-
+EXECUTE AS USER = 'EngelA';
+SELECT USER_NAME() AS UsuarioActual; -- Verifica que el usuario está activo
+REVERT; -- Regresa al usuario original 
 -- USUARIOS
 INSERT INTO Usuario (Cedula, Nombre, Apellido, Correo, Telefono, Tipo, IDCarrera) VALUES
 ('0801-1990-12345', 'María','López','mlopez@gmail.com','9876-5432','Estudiante', 1),
@@ -128,6 +140,9 @@ INSERT INTO TarjetaBiblioteca (IDUsuario, NumeroTarjeta, FechaEmision, FechaVenc
 (7, 'TB-2024-007', '2024-04-15', '2026-04-15', 1),
 (8, 'TB-2024-008', '2024-05-01', '2026-05-01', 1);
 
+EXECUTE AS USER = 'JonathanR';
+SELECT USER_NAME() AS UsuarioActual; -- Verifica que el usuario está activo
+REVERT; -- Regresa al usuario original 
 -- PRÉSTAMOS
 INSERT INTO Prestamo (IDUsuario, IDEjemplar, FechaPrestamo, FechaDevolucion, FechaDevReal, Estado) VALUES
 (1, 2,  '2026-05-01', '2026-05-15', '2026-05-14', 'Devuelto'),
@@ -144,3 +159,8 @@ INSERT INTO Prestamo (IDUsuario, IDEjemplar, FechaPrestamo, FechaDevolucion, Fec
 INSERT INTO Multa (IDPrestamo, Monto, Pagada, FechaMulta) VALUES
 (2, 50.00, 0, '2026-05-25'),
 (8, 75.00, 1, '2026-04-16');
+
+
+
+
+SELECT * FROM AuditoriaPrestamo;
