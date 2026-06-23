@@ -1,0 +1,63 @@
+CREATE PROCEDURE sp_ConsultarLibros
+    @ISBN VARCHAR(20) = NULL,
+    @Titulo VARCHAR(200) = NULL,
+    @Anio SMALLINT = NULL,
+    @IDCategoria INT = NULL,
+    @Editorial VARCHAR(150) = NULL,
+    @Edicion INT = NULL
+AS
+BEGIN
+    BEGIN TRY
+
+        -- Validaciones de parámetros vacíos
+        IF @ISBN IS NOT NULL AND LTRIM(RTRIM(@ISBN)) = ''
+            THROW 50001, 'El ISBN no puede estar vacío.', 1;
+
+        -- Validaciones solo de datos exactos 
+
+        IF @ISBN IS NOT NULL
+        AND NOT EXISTS (SELECT 1 FROM Libro WHERE ISBN = @ISBN)
+            THROW 50002, 'El ISBN no existe.', 1;
+
+        IF @IDCategoria IS NOT NULL
+        AND NOT EXISTS (SELECT 1 FROM Categoria WHERE IDCategoria = @IDCategoria)
+            THROW 50003, 'La categoría no existe.', 1;
+
+        IF @Anio IS NOT NULL
+        AND NOT EXISTS (SELECT 1 FROM Libro WHERE Anio = @Anio)
+            THROW 50004, 'No existen libros para ese año.', 1;
+
+        IF @Edicion IS NOT NULL
+        AND NOT EXISTS (SELECT 1 FROM Libro WHERE Edicion = @Edicion)
+            THROW 50005, 'No existen libros con esa edición.', 1;
+
+        -- Consulta
+
+        SELECT
+            L.IDLibro,
+            L.ISBN,
+            L.Titulo,
+            L.Anio,
+            C.Nombre AS Categoria,
+            L.Editorial,
+            L.Edicion
+        FROM Libro L
+        INNER JOIN Categoria C
+            ON L.IDCategoria = C.IDCategoria
+        WHERE
+            (@ISBN IS NULL OR L.ISBN = @ISBN)
+        AND (@Titulo IS NULL OR L.Titulo LIKE '%' + @Titulo + '%')
+        AND (@Anio IS NULL OR L.Anio = @Anio)
+        AND (@IDCategoria IS NULL OR L.IDCategoria = @IDCategoria)
+        AND (@Editorial IS NULL OR L.Editorial LIKE '%' + @Editorial + '%')
+        AND (@Edicion IS NULL OR L.Edicion = @Edicion);
+
+        IF @@ROWCOUNT = 0
+            THROW 50006, 'No se encontraron libros', 1;
+
+    END TRY
+    BEGIN CATCH
+        THROW;
+    END CATCH
+END;
+GO

@@ -1,0 +1,77 @@
+CREATE PROCEDURE sp_ConsultarUsuarios
+    @Cedula VARCHAR(20) = NULL,
+    @Nombre VARCHAR(100) = NULL,
+    @Apellido VARCHAR(100) = NULL,
+    @Correo VARCHAR(150) = NULL,
+    @Tipo VARCHAR(20) = NULL,
+    @IDCarrera INT = NULL
+AS
+BEGIN
+    BEGIN TRY
+
+        -- Validar campos vacíos
+
+        IF @Cedula IS NOT NULL
+        AND LTRIM(RTRIM(@Cedula)) = ''
+            THROW 50007, 'La cédula no puede estar vacía.', 1;
+
+
+        IF @Correo IS NOT NULL
+        AND LTRIM(RTRIM(@Correo)) = ''
+            THROW 50008, 'El correo no puede estar vacío.', 1;
+
+        IF @Tipo IS NOT NULL
+        AND LTRIM(RTRIM(@Tipo)) = ''
+            THROW 50009, 'El tipo no puede estar vacío.', 1;
+
+
+        -- Solo validaciones importantes
+
+        IF @Cedula IS NOT NULL
+        AND NOT EXISTS (SELECT 1 FROM Usuario WHERE Cedula = @Cedula)
+            THROW 50010, 'La cédula no existe.', 1;
+
+        IF @Correo IS NOT NULL
+        AND NOT EXISTS (SELECT 1 FROM Usuario WHERE Correo = @Correo)
+            THROW 50011, 'El correo no existe.', 1;
+
+        IF @Tipo IS NOT NULL
+        AND @Tipo NOT IN ('Estudiante','Docente','Externo')
+            THROW 50012, 'Tipo de usuario inválido.', 1;
+
+        IF @IDCarrera IS NOT NULL
+        AND NOT EXISTS (SELECT 1 FROM Carrera WHERE IDCarrera = @IDCarrera)
+            THROW 50013, 'La carrera no existe.', 1;
+
+        -- Consulta
+
+        SELECT
+            U.IDUsuario,
+            U.Cedula,
+            U.Nombre,
+            U.Apellido,
+            U.Correo,
+            U.Telefono,
+            U.Tipo,
+            C.Nombre AS Carrera,
+            C.Facultad
+        FROM Usuario U
+        LEFT JOIN Carrera C
+            ON U.IDCarrera = C.IDCarrera
+        WHERE
+            (@Cedula IS NULL OR U.Cedula = @Cedula)
+        AND (@Nombre IS NULL OR U.Nombre LIKE '%' + @Nombre + '%')
+        AND (@Apellido IS NULL OR U.Apellido LIKE '%' + @Apellido + '%')
+        AND (@Correo IS NULL OR U.Correo = @Correo)
+        AND (@Tipo IS NULL OR U.Tipo = @Tipo)
+        AND (@IDCarrera IS NULL OR U.IDCarrera = @IDCarrera);
+
+        IF @@ROWCOUNT = 0
+            THROW 50014, 'No se encontraron usuarios.', 1;
+
+    END TRY
+    BEGIN CATCH
+        THROW;
+    END CATCH
+END;
+GO

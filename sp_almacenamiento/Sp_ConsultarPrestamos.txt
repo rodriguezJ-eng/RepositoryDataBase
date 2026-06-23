@@ -1,0 +1,70 @@
+CREATE PROCEDURE sp_ConsultarPrestamos
+    @IDPrestamo INT = NULL,
+    @IDUsuario INT = NULL,
+    @IDEjemplar INT = NULL,
+    @Estado VARCHAR(20) = NULL,
+    @FechaPrestamo DATE = NULL,
+    @FechaDevolucion DATE = NULL
+AS
+BEGIN
+    BEGIN TRY
+
+        -- Validar campo vacio
+
+        IF @Estado IS NOT NULL
+        AND LTRIM(RTRIM(@Estado)) = ''
+            THROW 50015, 'El Estado no puede estar vacío.', 1;
+
+        -- Validaciones importantes
+
+        IF @Estado IS NOT NULL
+        AND @Estado NOT IN ('Activo','Devuelto','Vencido')
+            THROW 50016, 'Estado inválido.', 1;
+
+        IF @IDPrestamo IS NOT NULL
+        AND NOT EXISTS (SELECT 1 FROM Prestamo WHERE IDPrestamo = @IDPrestamo)
+            THROW 50017, 'El préstamo no existe.', 1;
+
+        IF @IDUsuario IS NOT NULL
+        AND NOT EXISTS (SELECT 1 FROM Usuario WHERE IDUsuario = @IDUsuario)
+            THROW 50018, 'El usuario no existe.', 1;
+
+        IF @IDEjemplar IS NOT NULL
+        AND NOT EXISTS (SELECT 1 FROM Ejemplar WHERE IDEjemplar = @IDEjemplar)
+            THROW 50019, 'El ejemplar no existe.', 1;
+
+        -- Consulta
+
+        SELECT
+            P.IDPrestamo,
+            U.Nombre + ' ' + U.Apellido AS Usuario,
+            L.Titulo,
+            E.Codigo,
+            P.FechaPrestamo,
+            P.FechaDevolucion,
+            P.FechaDevReal,
+            P.Estado
+        FROM Prestamo P
+        INNER JOIN Usuario U
+            ON P.IDUsuario = U.IDUsuario
+        INNER JOIN Ejemplar E
+            ON P.IDEjemplar = E.IDEjemplar
+        INNER JOIN Libro L
+            ON E.IDLibro = L.IDLibro
+        WHERE
+            (@IDPrestamo IS NULL OR P.IDPrestamo = @IDPrestamo)
+        AND (@IDUsuario IS NULL OR P.IDUsuario = @IDUsuario)
+        AND (@IDEjemplar IS NULL OR P.IDEjemplar = @IDEjemplar)
+        AND (@Estado IS NULL OR P.Estado = @Estado)
+        AND (@FechaPrestamo IS NULL OR P.FechaPrestamo = @FechaPrestamo)
+        AND (@FechaDevolucion IS NULL OR P.FechaDevolucion = @FechaDevolucion);
+
+        IF @@ROWCOUNT = 0
+            THROW 50020, 'No se encontraron préstamos.', 1;
+
+    END TRY
+    BEGIN CATCH
+        THROW;
+    END CATCH
+END;
+GO

@@ -13,6 +13,7 @@ SELECT USER_NAME() AS UsuarioActual;
 EXECUTE AS USER = 'RashelS';
 
 
+
 -- insertamos un nuevo libro a traves del usuario
 INSERT INTO Libro (ISBN, Titulo, Anio, IDCategoria, Editorial, Edicion) VALUES
 ('978-0136086208', 'Sistemas de Bases de Datos', 2024, 1, 'Pearson', 1);

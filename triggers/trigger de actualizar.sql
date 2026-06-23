@@ -16,7 +16,7 @@ EXECUTE AS USER = 'RashelS';
 UPDATE Libro
 SET Titulo = 'Redes de Computadoras: Un Enfoque Descendente',
     Editorial = 'Pearson'
-WHERE ISBN = '978-6071514028';
+WHERE ISBN = '978-6071514029';
 
 -- comprobamos nuestros registros
 SELECT * FROM AuditoriaLibro;

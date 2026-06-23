@@ -8,6 +8,7 @@
 -- ============================================================
 -- CREACIÓN DE LA BASE DE DATOS
 CREATE DATABASE BibliotecaUniversitaria;
+go
 USE BibliotecaUniversitaria;
 
 -- 
@@ -20,6 +21,7 @@ IDCategoria INT IDENTITY(1,1) PRIMARY KEY,
 Nombre VARCHAR(100) NOT NULL UNIQUE,
 Descripcion VARCHAR(255) NOT NULL DEFAULT 'Sin descripción'
 );
+go
 
 -- Tabla: Autor
 CREATE TABLE Autor(
@@ -29,6 +31,7 @@ Apellido VARCHAR(100) NOT NULL,
 Nacionalidad VARCHAR(80) NOT NULL DEFAULT 'Desconocida',
 CONSTRAINT UQ_Autor UNIQUE (Nombre, Apellido)
 );
+go
 
 -- Tabla: Libro
 CREATE TABLE Libro(
@@ -51,6 +54,7 @@ Codigo VARCHAR(30)  NOT NULL UNIQUE,
 Estado VARCHAR(20)  NOT NULL DEFAULT 'Disponible'CHECK (Estado IN ('Disponible','Prestado','En reparación','Baja')),
 CONSTRAINT FK_Ejemplar_Libro FOREIGN KEY (IDLibro) REFERENCES Libro(IDLibro)
 );
+go
 
 -- Tabla: Carrera (para clasificar usuarios estudiantes)
 CREATE TABLE Carrera (

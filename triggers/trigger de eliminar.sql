@@ -13,7 +13,7 @@ EXECUTE AS USER = 'RashelS';
 
 -- eliminamos un libro a traves del usuario sql
 DELETE FROM Libro
-WHERE IDLibro = 2;
+WHERE IDLibro = 11;
 
 -- comprobamos nuestros registros
 SELECT * FROM AuditoriaLibro;

@@ -129,6 +129,36 @@ CONSTRAINT FK_LA_Autor  FOREIGN KEY (IDAutor)  REFERENCES Autor(IDAutor)
 );
 go
 
+-- TABLAS DE AUDITORÍA
+
+CREATE TABLE AuditoriaLibro (
+    IdAuditoria INT IDENTITY(1,1) PRIMARY KEY,
+    Accion VARCHAR(20),
+    Fecha DATETIME,
+    IDLibro INT,      
+    Usuario VARCHAR(100)
+);
+go
+
+CREATE TABLE AuditoriaUsuario (
+    IdAuditoria INT IDENTITY(1,1) PRIMARY KEY,
+    Accion VARCHAR(20),
+    Fecha DATETIME,
+    IDUsuario INT,
+    Usuario VARCHAR(100)
+);
+go
+
+CREATE TABLE AuditoriaPrestamo (
+    IdAuditoria INT IDENTITY(1,1) PRIMARY KEY,
+    Accion VARCHAR(20),
+    Fecha DATETIME,
+    IDPrestamo INT,
+    Usuario VARCHAR(100)
+);
+GO
+
+
 -- USUARIOS SQL
 CREATE USER RashelS    WITHOUT LOGIN;
 CREATE USER JonathanR  WITHOUT LOGIN;
@@ -140,3 +170,5 @@ ALTER ROLE db_owner ADD MEMBER RashelS;
 ALTER ROLE db_owner ADD MEMBER JonathanR;
 ALTER ROLE db_owner ADD MEMBER EngelA;
 --ALTER ROLE db_owner ADD MEMBER EstudianteB;
+
+SELECT * FROM Libro;

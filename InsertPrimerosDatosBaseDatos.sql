@@ -21,6 +21,7 @@ INSERT INTO Categoria (Nombre, Descripcion) VALUES
 ('Literatura Universal','Obras clásicas y contemporáneas de todo el mundo'),
 ('Administración','Gestión empresarial y recursos humanos'),
 ('Ciencias Básicas','Física, química y biología general');
+go
 
 -- AUTORES
 INSERT INTO Autor (Nombre, Apellido, Nacionalidad) VALUES
