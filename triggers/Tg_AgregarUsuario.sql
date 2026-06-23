@@ -1,7 +1,7 @@
 USE BibliotecaUniversitaria;
 GO
 
-CREATE TRIGGER TR_AgregarUsuarios
+CREATE TRIGGER Tr_AgregarUsuarios
 ON Usuario
 AFTER INSERT
 AS

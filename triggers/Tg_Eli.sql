@@ -1,7 +1,7 @@
 USE BibliotecaUniversitaria;
 GO
 
-CREATE TRIGGER TR_EliminarPrestamo
+CREATE TRIGGER Tr_EliminarPrestamo
 ON Prestamo
 AFTER DELETE
 AS

@@ -1,4 +1,4 @@
-CREATE TRIGGER TR_AgregarPrestamos
+CREATE TRIGGER Tr_AgregarPrestamo
 ON Prestamo
 AFTER INSERT
 AS

@@ -1,6 +1,6 @@
 USE BibliotecaUniversitaria;
 GO
-CREATE TRIGGER TR_EliminarUsuario
+CREATE TRIGGER Tr_EliminarUsuario
 ON Usuario
 AFTER DELETE
 AS

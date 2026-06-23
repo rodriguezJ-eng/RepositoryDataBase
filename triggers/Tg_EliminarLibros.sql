@@ -1,4 +1,4 @@
-CREATE TRIGGER TR_EliminarLibro
+CREATE TRIGGER Tr_EliminarLibro
 ON Libro
 AFTER DELETE
 AS

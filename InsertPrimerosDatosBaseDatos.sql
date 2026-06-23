@@ -11,6 +11,9 @@
 USE BibliotecaUniversitaria;
 GO
 
+EXECUTE AS USER = 'RashelS';
+SELECT USER_NAME() AS UsuarioActual; -- Verifica que el usuario está activo
+REVERT; -- Regresa al usuario original 
 
 -- CATEGORIAS
 INSERT INTO Categoria (Nombre, Descripcion) VALUES
