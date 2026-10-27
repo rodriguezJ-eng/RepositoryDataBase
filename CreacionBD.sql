@@ -65,14 +65,14 @@ Facultad VARCHAR(150) NOT NULL
 go
 
 -- Tabla: Usuario (lectores de la biblioteca)
-CREATE TABLE Usuario (
+CREATE TABLE Lectores (
 IDUsuario INT IDENTITY(1,1) PRIMARY KEY,
 Cedula VARCHAR(20) NOT NULL UNIQUE,
 Nombre VARCHAR(100) NOT NULL,
 Apellido VARCHAR(100) NOT NULL,
 Correo VARCHAR(150) NOT NULL UNIQUE,
 Telefono VARCHAR(20) NOT NULL DEFAULT 'Sin registro',
-Tipo VARCHAR(20)  NOT NULL DEFAULT 'Estudiante' CHECK (Tipo IN ('Estudiante','Docente','Externo')),
+Rol VARCHAR(20)  NOT NULL DEFAULT 'Estudiante' CHECK (Rol IN ('Estudiante','Docente','Externo')),
 IDCarrera INT NULL,
 CONSTRAINT FK_Usuario_Carrera FOREIGN KEY (IDCarrera) REFERENCES Carrera(IDCarrera)
 );
