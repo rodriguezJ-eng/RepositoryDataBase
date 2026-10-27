@@ -66,8 +66,8 @@ go
 
 -- Tabla: Usuario (lectores de la biblioteca)
 CREATE TABLE Lectores (
-IDUsuario INT IDENTITY(1,1) PRIMARY KEY,
-Cedula VARCHAR(20) NOT NULL UNIQUE,
+IDLectores INT IDENTITY(1,1) PRIMARY KEY,
+Identificador VARCHAR(20) NOT NULL UNIQUE,
 Nombre VARCHAR(100) NOT NULL,
 Apellido VARCHAR(100) NOT NULL,
 Correo VARCHAR(150) NOT NULL UNIQUE,
@@ -95,13 +95,13 @@ go
 -- Tabla: Prestamo (relación 1:N con Usuario y Ejemplar)
 CREATE TABLE Prestamo (
 IDPrestamo INT IDENTITY(1,1) PRIMARY KEY,
-IDUsuario  INT NOT NULL,
+IDLectores  INT NOT NULL,
 IDEjemplar INT NOT NULL,
 FechaPrestamo DATE NOT NULL DEFAULT CAST(GETDATE() AS DATE),
 FechaDevolucion DATE NOT NULL,
 FechaDevReal  DATE NULL,
 Estado VARCHAR(20) NOT NULL DEFAULT 'Activo' CHECK (Estado IN ('Activo','Devuelto','Vencido')),
-CONSTRAINT FK_Prestamo_Usuario  FOREIGN KEY (IDUsuario) REFERENCES Usuario(IDUsuario),
+CONSTRAINT FK_Prestamo_Lectores  FOREIGN KEY (IDLectores) REFERENCES Usuario(IDLectores),
 CONSTRAINT FK_Prestamo_Ejemplar FOREIGN KEY (IDEjemplar) REFERENCES Ejemplar(IDEjemplar),
 CONSTRAINT CK_Prestamo_Fechas   CHECK (FechaDevolucion > FechaPrestamo)
 );
